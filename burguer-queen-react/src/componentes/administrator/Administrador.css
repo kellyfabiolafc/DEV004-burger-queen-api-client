@@ -49,31 +49,30 @@ nav ul li a {
 .admin-btn:hover {
   background-color: #555;
 }
-main {
+.adm-main-container {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 100px;
 }
-  table {
-    margin-top: 300px;
+  .table-list-of-employed {
     border-collapse: collapse;
     width: 70%;
     font-family: Arial, sans-serif;
 }
 
-th, td {
+.table-th-td {
     border: 1px solid black;
     padding: 8px;
     text-align: left;
 }
 
-th {
+.table-th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
-td {
+.table-td {
     background-color: #ffffff;
 }
 .admin-form-container{

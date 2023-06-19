@@ -1,14 +1,21 @@
+@font-face {
+  font-family: 'Brusher';
+  src: url('../fonts/Brusher.ttf') format('opentype');
+}
+
 #root {
   width: 100%;
   height: 100%;
 }
 body{
-  background-color: #000000;
+  background-color: rgb(4, 4, 4);
   padding: 0px;
+  margin: 0;
+  font-family:"Open Sans" 
 }
 img{/* banner 1 */
 
-  width: 100%;
+  width: 90%;
   }
 
   .lg-logo{
@@ -18,26 +25,20 @@ img{/* banner 1 */
     align-items: center;
   }
 .lg-main-conteiner{
-  width: 100%;
-  height: 100%;
+  height: 100vh;
+  padding: 0 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  margin: 0 auto;
-  border-radius: 8px;
+
 }
 
 
 .lg-form-container {
   position: relative;
-  width: 512px;
-  height: 648px;
  border-radius: 20px;
+ max-width: 422px;
+ width: 100%;
 
 }
 
@@ -51,42 +52,48 @@ img{/* banner 1 */
   background-color: #D4AF37; /* Color mostaza */
   filter: blur(10px); /* Efecto de desenfoque */
   z-index: -1;
+  border-radius: 20px;
+  max-width:100%;
 }
 
 .lg-form {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  width: 80%;
-  height: 80%;
-  max-width: 400px;
+  gap: 5px;
+  padding: 70px 40px;
+  border-radius: 20px;
 }
 
-
+.lg-form p{
+  text-align: center;
+  color:#724C11;
+  font-family: "Brusher";
+  font-size: xx-large;
+}
 .lg-form label{
   margin: 10px 0px 10px 0px;
   color:#724C11;
-  font-family: Roboto;
   text-align: start;
+  font-weight: 700;
 }
 .lg-form input{
-  border:none;
-  border-radius: 5px;
-  height: 50px;
-  line-height: normal;
-  padding-left: 12px;
-  
+   border: none;
+    border-radius: 5px;
+    height: 50px;
+    line-height: normal;
+    padding-left: 12px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
 }
 .lg-form h2{
   color:#724C11;
-  font-family: Roboto;
+}
+.lg-form span{
+  text-align: center;
 }
 .lg-form button{
-  margin-top: 10px;
+  margin-top: 32px;
   height: 48px;
   font-size: 18px;
   padding-left: 20px;
@@ -98,9 +105,4 @@ img{/* banner 1 */
   border: none;
   background-color: #724C11;
   color: #fdfffd;
-}
-@media (max-width: 1133px) and (orientation: portrait) {
-  /* Estilos específicos para tablets en posición vertical */
-  /* Aquí puedes agregar tus estilos */
-
 }

@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login updateToken={updateToken}/>} />
-        <Route path="/waiter/orders" element={<Waiter />} />
+        <Route path="/waiter/orders" element={<Waiter token={token} />} />
         <Route path="/chef" element={<Chef />} />
         <Route path="/administrador/employed" element={<Administrador token={token} />} />
       </Routes>

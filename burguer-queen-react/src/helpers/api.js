@@ -44,12 +44,72 @@ export async function httpGetEmployed(token) {
     const response = await axios.get(`${dominiolocal}/users`, {
       // autorization envio el token de autorizacion
       headers: {
-       'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      }
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
   } catch (err) {
     console.log(err);
   }
 }
+
+export async function httpGetProducts(token) {
+  try {
+    const response = await axios.get(`${dominiolocal}/products`, {
+      headers: {
+      
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    // console.log(response.data);
+    return response.data;
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+// export async function httpDeleteProducts(token) {
+//   try {
+//     const response = await axios.get(`${dominiolocal}/products`, {
+//       headers: {
+      
+//         'Authorization': `Bearer ${token}`,
+//       },
+//     });
+//     // console.log(response.data);
+//     return response.data;
+//   } catch(err) {
+//     console.log(err)
+//   }
+// }
+
+
+export async function httpCreateOrder(token, product){
+  try {
+    const response = await axios.post(`${dominiolocal}/orders`, product, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+    return response.data
+  }catch(err) {
+    console.log(err);
+  }
+}
+
+export async function httpGetOrder(token){
+  try {
+    const response = await axios.get(`${dominiolocal}/orders`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+    return response.data
+  }catch(err) {
+    console.log(err);
+  }
+}
+

@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { httpLogin } from "../helpers/api";
 
 const Login = ({ updateToken }) => {
+
+  document.body.classList.add('login-background');
+  document.body.classList.remove('others-background');
   //para navegar a rutas
   const navigate = useNavigate();
   //Guardar la entrada del usuario  y password
@@ -15,7 +18,7 @@ const Login = ({ updateToken }) => {
     try {
       
       const data = await httpLogin(user, password);
-
+      localStorage.setItem("token",data.accessToken)
       updateToken(data.accessToken)
       //segun el rol se navegara
       if (data.user.role === 'admin') return navigate('/administrador/employed')
@@ -43,7 +46,8 @@ const Login = ({ updateToken }) => {
         </div>
         <div className="lg-form-container">
           <form action="" className="lg-form" onSubmit={(evt)=>{ loginClick(evt)}}>
-            <h2>WELCOME</h2>
+    
+            <p>Welcome</p>
             <label htmlFor="email">Email</label>
             <input type="email" placeholder="example@gmail.com" 
             value={user} 
@@ -53,8 +57,9 @@ const Login = ({ updateToken }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)} 
             />
-             {textWrong === false && <p  style={{ color: "red" }}>verify email and password</p>}
+             {textWrong === false && <span  style={{ color: "red" }}>verify email and password</span>}
             <button type="submit">Login</button>
+      
           </form>
         </div>
       </main>
