@@ -1,0 +1,52 @@
+.chef-logoburger-img {
+    width: 200px;
+    height: 200px;
+  }
+  .login-background {
+    /* background: linear-gradient(to bottom, #d7ffff 0%, #bdf0f7 25%, #9edde8 50%, #7ecad9 75%, #61b9cd 100%); */
+   background-color:rgb(5, 5, 5) ;
+  }
+  
+  .others-background{
+    background-color: #F8F0D7 ;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav ul li {
+    display: inline;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #724C11;
+    font-weight: bold;
+  }
+  .chef-btn {
+    background-color: #724C11;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .chef-btn:hover {
+    background-color: #555;
+  }
+ .chef-orders-table__submit-button{
+  margin-right: 10px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-size: 15px;
+  text-align: center;
+  color: #FFFFFF;
+  width: 130px;
+  height: 40px;
+  background: #724C11;
+  border-radius: 16px;
+  margin-top: 10px;
+ }

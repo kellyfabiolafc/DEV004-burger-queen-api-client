@@ -1,5 +1,8 @@
 import './Administrador.css'
 import logoNav from "../../assets/logoNav.png"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export const NavAdmin = () => {
     return(
@@ -14,7 +17,16 @@ export const NavAdmin = () => {
                  <li><a href="">ADMINISTRAR EMPLEADOS</a></li>
               </ul>
             </nav>
-              <button className='admin-btn'>LogOut</button>
+            <Link to="/" className="salir-button">
+          <button className="chef-btn">
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              size="lg"
+              style={{ color: "#e1d76b" }}
+            />
+          </button>
+        </Link>
+          
          </header>
     </>
     )

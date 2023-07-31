@@ -3,37 +3,50 @@ import { useState, useEffect } from "react";
  import { useNavigate } from "react-router-dom";
 import { httpLogin } from "../helpers/api";
 
+// Componente de inicio de sesión
 const Login = ({ updateToken }) => {
 
+  // Añadir clase CSS al cuerpo del documento para el estilo de fondo del inicio de sesión
   document.body.classList.add('login-background');
   document.body.classList.remove('others-background');
-  //para navegar a rutas
+
+  // Para navegar a rutas
   const navigate = useNavigate();
-  //Guardar la entrada del usuario  y password
+
+  // Guardar la entrada del usuario y contraseña
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [textWrong, settextWrong] = useState(true);
-  const loginClick = async (evt) => {
-    evt.preventDefault()
-    try {
-      
-      const data = await httpLogin(user, password);
-      localStorage.setItem("token",data.accessToken)
-      updateToken(data.accessToken)
-      //segun el rol se navegara
-      if (data.user.role === 'admin') return navigate('/administrador/employed')
-      if (data.user.role === 'chef') return navigate('/chef')
-      if (data.user.role === 'waiter') return navigate('/waiter/orders')
 
-    } catch{
-      
+  // Función para manejar el evento de inicio de sesión
+  const loginClick = async (evt) => {
+    evt.preventDefault();
+    try {
+      // Realizar la solicitud de inicio de sesión
+      const data = await httpLogin(user, password);
+
+      // Guardar el token en el almacenamiento local
+      localStorage.setItem("token", data.accessToken);
+
+      // Actualizar el token en el estado
+      updateToken(data.accessToken);
+
+      // Según el rol del usuario, se navegará a la página correspondiente
+      if (data.user.role === 'admin') return navigate('/administrador/employed');
+      if (data.user.role === 'chef') return navigate('/chef');
+      if (data.user.role === 'waiter') return navigate('/waiter/orders');
+
+    } catch {
+      // Si ocurre un error durante el inicio de sesión
       settextWrong(false);
-      console.log('No se encontraron roles asociados a su cuenta ');
+      console.log('No se encontraron roles asociados a su cuenta');
     }
   };
 
+  // Efecto para actualizar el token
+  useEffect(() => updateToken(""), []);
 
-  useEffect(() => updateToken(""), [])
+
   return (
     <>
       <main className="lg-main-conteiner">

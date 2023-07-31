@@ -12,21 +12,23 @@ import { faPaperPlane, faMugSaucer, faUtensils, faPlus, faMinus, faTrash} from '
 const Waiter = ({ token }) => {
   document.body.classList.add('others-background');
   document.body.classList.remove('login-background');
-  const [customer, setCustomer] = useState("");
-  const [selectedProducts, setSelectedProducts] = useState([]);
-  // const [productsOrder, setProductsOrder] = useState([])
-  const [products, setProducts] = useState([]);
-  // const [card, setCard]= useState()
-  async function readProducts() {
-    setProducts(await httpGetProducts(localStorage.getItem("token")));
-  }
+// Definición de estados mediante el hook useState
+const [customer, setCustomer] = useState(""); // Estado para almacenar el nombre del cliente
+const [selectedProducts, setSelectedProducts] = useState([]); // Estado para almacenar los productos seleccionados
+const [products, setProducts] = useState([]); // Estado para almacenar la lista de productos
 
-  useEffect(() => {
-    const read = async () => {
-      await readProducts();
-    };
-    read();
-  });
+async function readProducts() {
+  setProducts(await httpGetProducts(localStorage.getItem("token"))); // Llamada a la función httpGetProducts para obtener la lista de productos
+}
+
+// Utilización del hook useEffect para ejecutar la función read al cargar el componente
+useEffect(() => {
+  const read = async () => {
+    await readProducts();
+  };
+  read();
+}, []);
+
 
   async function saveOrder(e) {
     // evita la recarga de la pagina - evita el comportamiento normal del evento
@@ -34,8 +36,7 @@ const Waiter = ({ token }) => {
     // si alguno de los 3 datos no tiene valor no se permite continuar
     if (!customer) return alert("You must enter name of custumer");
 
-    const dateEntry = DateTime.now().toISO();
-    console.log(dateEntry);
+    const dateEntry =  DateTime.now().toFormat('dd/MM/yyyy HH:mm'); // Obtener la fecha actual
 
     const newOrder = {
       client: customer,
@@ -43,35 +44,37 @@ const Waiter = ({ token }) => {
       status: "pending",
       dateEntry: dateEntry,
     };
+  
     try {
-      const result = await httpCreateOrder(token, newOrder);
-      const resultado = await httpGetOrder(token);
+      const result = await httpCreateOrder(token, newOrder); // Llamada a la función httpCreateOrder para crear una orden
+      const resultado = await httpGetOrder(token); // Llamada a la función httpGetOrder para obtener las órdenes
       console.log(result);
       console.log(resultado);
-      // await httpGetOrden
-      setSelectedProducts([]);
-      setCustomer("");
+      setSelectedProducts([]); // Limpiar la lista de productos seleccionados
+      setCustomer(""); // Limpiar el nombre del cliente
       console.log("Se agrego la orden con exito");
     } catch (err) {
-      console.log("este es un error: " + err);
+      console.log("Este es un error: " + err);
       console.log("No se agrego la orden con exito");
     }
   }
 
   const addProductToOrder = (product) => {
-    //busca el indice del producto existente en el pedido
+    // Busca el índice del producto existente en el pedido
     const existToProducts = selectedProducts.findIndex(
       (selectedProduct) => selectedProduct.id === product.id
     );
+  
     if (existToProducts !== -1) {
-      //El producto ya esta en el pedido y es diferente a -1, entonces se incrementa la cantidad
+      // El producto ya está en el pedido y es diferente a -1, entonces se incrementa la cantidad
       const updatedProducts = [...selectedProducts];
       updatedProducts[existToProducts].amount += 1;
       updatedProducts[existToProducts].price += product.price;
-      //actualiza la lista de productos seleccionados
+  
+      // Actualiza la lista de productos seleccionados
       setSelectedProducts(updatedProducts);
     } else {
-      //agrega un nuevo producto al pedido
+      // Agrega un nuevo producto al pedido
       setSelectedProducts((prevProducts) => [
         ...prevProducts,
         { ...product, amount: 1 },
@@ -85,7 +88,9 @@ const Waiter = ({ token }) => {
       const updatedProducts = selectedProducts.map((selectedProduct) => {
         if (selectedProduct.id === product.id) {
           const updatedAmount = selectedProduct.amount - 1;
-          const updatedPrice = selectedProduct.price - selectedProduct.price / selectedProduct.amount;
+          const updatedPrice =
+            selectedProduct.price - selectedProduct.price / selectedProduct.amount;
+  
           return {
             ...selectedProduct,
             amount: updatedAmount,
@@ -94,6 +99,7 @@ const Waiter = ({ token }) => {
         }
         return selectedProduct;
       });
+  
       // Actualiza la lista de productos seleccionados
       setSelectedProducts(updatedProducts);
     } else {
@@ -102,37 +108,42 @@ const Waiter = ({ token }) => {
     }
   };
   
-  const increaseProduct = (product) => {
-    if (product.amount >= 1 ) {
-      // El producto ya está en el pedido y su cantidad es mayor que 1, entonces se disminuye la cantidad
-      const updatedProducts = selectedProducts.map((selectedProduct) => {
-        if (selectedProduct.id === product.id) {
-          const updatedAmount = selectedProduct.amount + 1;
-          const updatedPrice = selectedProduct.price + selectedProduct.price / selectedProduct.amount;
-          return {
-            ...selectedProduct,
-            amount: updatedAmount,
-            price: updatedPrice,
-          };
-        }
-        return selectedProduct;
-      });
-      // Actualiza la lista de productos seleccionados
-      setSelectedProducts(updatedProducts);
-    } else {
-      // Si la cantidad es igual o menor que 1, puedes decidir qué hacer aquí, como eliminar el producto del pedido o mostrar un mensaje de error.
-      alert('La cantidad mínima del producto es 1');
-    }
-  };
-  //fUNCION para eliminar un producto y actualizar la lista solo 
-  const deleteProduct = (product) => {
-    const updatedProducts = selectedProducts.filter((selectedProduct) => {
-      return selectedProduct.id !== product.id;
+const increaseProduct = (product) => {
+  if (product.amount >= 1 ) {
+    // El producto ya está en el pedido y su cantidad es mayor o igual a 1, entonces se incrementa la cantidad
+    const updatedProducts = selectedProducts.map((selectedProduct) => {
+      if (selectedProduct.id === product.id) {
+        const updatedAmount = selectedProduct.amount + 1;
+        const updatedPrice =
+          selectedProduct.price + selectedProduct.price / selectedProduct.amount;
+
+        return {
+          ...selectedProduct,
+          amount: updatedAmount,
+          price: updatedPrice,
+        };
+      }
+      return selectedProduct;
     });
-  
+
+    // Actualiza la lista de productos seleccionados
     setSelectedProducts(updatedProducts);
-  };
-  //funcion para sumar todas las cantidades de productos seleccionados 
+  } else {
+    // Si la cantidad es igual o menor que 1, puedes decidir qué hacer aquí, como eliminar el producto del pedido o mostrar un mensaje de error.
+    alert('La cantidad mínima del producto es 1');
+  }
+};
+// Función para eliminar un producto y actualizar la lista solo
+const deleteProduct = (product) => {
+  // Filtra los productos seleccionados, removiendo el producto que se desea eliminar
+  const updatedProducts = selectedProducts.filter((selectedProduct) => {
+    return selectedProduct.id !== product.id;
+  });
+
+  // Actualiza la lista de productos seleccionados
+  setSelectedProducts(updatedProducts);
+};
+
 
   return (
     <>
