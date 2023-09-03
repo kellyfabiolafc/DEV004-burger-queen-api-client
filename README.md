@@ -1,3 +1,5 @@
+<picture align="center" width="100%"> <img width="100%" src="src/assets/banner-bq-md.gif"></picture><br>
+
 # Burger Queen (API Client)
 
 ## Índice
