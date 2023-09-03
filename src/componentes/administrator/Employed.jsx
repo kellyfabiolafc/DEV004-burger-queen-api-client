@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { NavAdmin } from './NavAdmin';
 
 const Administrador = ({ token }) => {
+  
+  document.body.classList.add("others-background");
+  document.body.classList.remove("login-background");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
@@ -50,6 +54,9 @@ const Administrador = ({ token }) => {
       <NavAdmin />
       <main className='adm-main-container'>
         <div>
+        <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
           <h5>List Of Waiters </h5>
 
           <table className='table-list-of-employed'>
